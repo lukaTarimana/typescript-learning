@@ -1,3 +1,4 @@
+"use strict";
 // let names: any = ["luigi", "mario", "yoshi"];
 // names.push("toad");
 // // names.push(3);
@@ -18,10 +19,10 @@
 // ninja.age = 40;
 // ninja.name = "ryu";
 // // ninja.age = "30";
-// explicit types
-var characterE;
-var ageE;
-var isLoggedInE;
+// explicit types ხელით რომ უწერ როგორი ტიპი უნდა იყოს
+let characterE;
+let ageE;
+let isLoggedInE;
 ageE = 30;
 // arrays
 /* თუ ერეის გამოცხადებისთანავე ჩავუწერთ მნიშვნელობებს
@@ -33,54 +34,121 @@ ageE = 30;
   დროს უნდა მივუწეროთ ტიპი და მაგის შემდგომ ცალკე ხაზზე ჩავსვათ
   მნიშვნელობები
 */
-var ninjasA;
+let ninjasA;
 //push მეთოდს ვერ გამობიყენებთ ამ დროს
 ninjasA = ["yoshi", "mario"];
 /*push მეთოდის გმაოყენეაბ აქ შეგვიძლია რადგან
   mixed variable-ის დეკლარირება ხდება როგორც ერეის
   ზედა შემთხვევაში სანამ ninjas არ გავუტოლეთ ერეის
-  მაქამდე არ იყო აღქმული როგორც ერეი შესაბამისად
+  მაქამდე არ ერეის მნიშვნელობა რა ჰქონდა მინიჭებული შესაბამისად
   push მეთოდი არ მუშაობდა :)
 */
-var mixedP = [];
+let mixedP = [];
 mixedP.push("hello");
 mixedP.push(20);
 console.log(mixedP);
 //--------union types >>> (string|boolean|number)
-/*union types-ს ფრჩიხილები არეის დროს სჭირდება
+/*union types-ს ფრჩიხილები ერეის დროს სჭირდება
   თუმცა ჩვეულებრივი variable-ის დროს არა
 */
-var uidU;
+let uidU;
 uidU = "123";
 uidU = 123;
 //objects
-/* როდესაც ტიპად ვუწერთ ობიექტს ერეის მნიშვნელობას თუ
-მივცემთ ერორს არ ამოაგდებს რადგან ერეიც თავის თავში ობიექტია
+/* როდესაც ტიპად ვუწერთ ობიექტს და ერეის მნიშვნელობას
+მივცემთ, ერორს არ ამოაგდებს, რადგან ერეიც თავის თავში ობიექტია
  */
-var ninjaOneO;
+let ninjaOneO;
 ninjaOneO = { name: "yoshi", age: 30 };
 ninjaOneO = [];
-var ninjaTwoO;
+let ninjaTwoO;
 ninjaTwoO = {
     name: "mario",
     age: 20,
-    beltColor: "black"
+    beltColor: "black",
+    // skills: "saf",
 };
 //any type
-var ageA = 25;
+let ageA = 25;
 ageA = true;
 console.log(ageA);
 ageA = "hello";
 console.log(ageA);
 ageA = { name: " luigi" };
 console.log(ageA);
-var mixedA = [];
+let mixedA = [];
 mixedA.push(5);
 mixedA.push("mario");
 mixedA.push(false);
 console.log(mixedA);
-var ninjaA;
+let ninjaA;
 ninjaA = { name: "yoshi", age: 23 };
 console.log(ninjaA);
 ninjaA = { name: 23, age: "yoshi" };
 console.log(ninjaA);
+//function type
+//function ტიპისთვის პირველი ასო დიდი უნდა იყოს (Function)
+let greet = () => {
+    console.log("hello, world");
+};
+//greet = "hello" (X)
+let greet2;
+greet = () => {
+    console.log("hello, again");
+};
+//თუ ფუნქცია არაფერს აბრუნებს ის მაინც აბრუნებს void-ს
+//void ნიშნავს რომ საერთოდ არ ექნება value (სიცარიელე)
+const add = (a, b) => {
+    console.log(a + b);
+};
+add(5, 10);
+const addOptionalParameter = (a, b, c) => {
+    console.log(a + b);
+    console.log(c);
+};
+addOptionalParameter(5, 6);
+//როდესაც default value-ს (c: number | string = 10) ვანიჭებთ კითხვის ნიშანი არ უნდა
+const addOptional = (a, b, c = 10) => {
+    console.log(a + b);
+    console.log(c);
+};
+addOptional(6, 2);
+const minus = (a, b) => {
+    return a + b;
+};
+/*result ავტომატურად ხდება number type რადგან ფუნქცია number ტიპს აბრუნებს
+ეს იგივეა დაგვეწერა:
+                                      V V
+const minus = (a: number, b: number):number => {
+  return a + b;
+};
+*/
+let result = minus(10, 7);
+const Ingletails = (uid, item) => {
+    console.log(`${item} has a uid of ${uid}`);
+};
+const greetA = (user) => {
+    console.log(`${user.name} says hello`);
+};
+//Function Signatures
+let greetSignaturesA;
+// example 1
+let greetSignaturesB;
+greetSignaturesB = (name, greeting) => {
+    console.log(`${name} says ${greeting}`);
+};
+// example 2
+let calc;
+calc = (numOne, numTwo, action) => {
+    if (action === "add") {
+        return numOne + numTwo;
+    }
+    else {
+        return numOne - numTwo;
+    }
+};
+// example 3
+let logDetails;
+logDetails = (ninja) => {
+    console.log(`${ninja.name} is ${ninja.age} years old`);
+};

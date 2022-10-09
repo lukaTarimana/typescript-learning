@@ -25,7 +25,7 @@
 // ninja.name = "ryu";
 // // ninja.age = "30";
 
-// explicit types
+// explicit types ხელით რომ უწერ როგორი ტიპი უნდა იყოს
 let characterE: string;
 let ageE: number;
 let isLoggedInE: boolean;
@@ -50,7 +50,7 @@ ninjasA = ["yoshi", "mario"];
 /*push მეთოდის გმაოყენეაბ აქ შეგვიძლია რადგან
   mixed variable-ის დეკლარირება ხდება როგორც ერეის
   ზედა შემთხვევაში სანამ ninjas არ გავუტოლეთ ერეის
-  მაქამდე არ იყო აღქმული როგორც ერეი შესაბამისად
+  მაქამდე არ ერეის მნიშვნელობა რა ჰქონდა მინიჭებული შესაბამისად
   push მეთოდი არ მუშაობდა :)
 */
 let mixedP: (string | number)[] = [];
@@ -60,7 +60,7 @@ mixedP.push(20);
 console.log(mixedP);
 
 //--------union types >>> (string|boolean|number)
-/*union types-ს ფრჩიხილები არეის დროს სჭირდება
+/*union types-ს ფრჩიხილები ერეის დროს სჭირდება
   თუმცა ჩვეულებრივი variable-ის დროს არა
 */
 
@@ -69,8 +69,8 @@ uidU = "123";
 uidU = 123;
 
 //objects
-/* როდესაც ტიპად ვუწერთ ობიექტს ერეის მნიშვნელობას თუ
-მივცემთ ერორს არ ამოაგდებს რადგან ერეიც თავის თავში ობიექტია
+/* როდესაც ტიპად ვუწერთ ობიექტს და ერეის მნიშვნელობას
+მივცემთ, ერორს არ ამოაგდებს, რადგან ერეიც თავის თავში ობიექტია
  */
 let ninjaOneO: object;
 ninjaOneO = { name: "yoshi", age: 30 };
@@ -106,3 +106,94 @@ console.log(ninjaA);
 
 ninjaA = { name: 23, age: "yoshi" };
 console.log(ninjaA);
+
+//function type
+//function ტიპისთვის პირველი ასო დიდი უნდა იყოს (Function)
+
+let greet = () => {
+  console.log("hello, world");
+};
+
+//greet = "hello" (X)
+
+let greet2: Function;
+
+greet = () => {
+  console.log("hello, again");
+};
+//თუ ფუნქცია არაფერს აბრუნებს ის მაინც აბრუნებს void-ს
+//void ნიშნავს რომ საერთოდ არ ექნება value (სიცარიელე)
+const add = (a: number, b: number) => {
+  console.log(a + b);
+};
+
+add(5, 10);
+
+const addOptionalParameter = (a: number, b: number, c?: number | string) => {
+  console.log(a + b);
+  console.log(c);
+};
+
+addOptionalParameter(5, 6);
+
+//როდესაც default value-ს (c: number | string = 10) ვანიჭებთ კითხვის ნიშანი არ უნდა
+const addOptional = (a: number, b: number, c: number | string = 10) => {
+  console.log(a + b);
+  console.log(c);
+};
+
+addOptional(6, 2);
+
+const minus = (a: number, b: number) => {
+  return a + b;
+};
+/*result ავტომატურად ხდება number type რადგან ფუნქცია number ტიპს აბრუნებს
+ეს იგივეა დაგვეწერა:                   
+                                      V V
+const minus = (a: number, b: number):number => {
+  return a + b;
+};
+*/
+let result = minus(10, 7);
+
+//Type aliases
+type StringOrNum = string | number;
+type objWithName = { name: string; uid: StringOrNum };
+
+const Ingletails = (uid: StringOrNum, item: string) => {
+  console.log(`${item} has a uid of ${uid}`);
+};
+
+const greetA = (user: objWithName) => {
+  console.log(`${user.name} says hello`);
+};
+
+//Function Signatures
+let greetSignaturesA: Function;
+
+// example 1
+let greetSignaturesB: (a: string, b: string) => void;
+
+greetSignaturesB = (name: string, greeting: string) => {
+  console.log(`${name} says ${greeting}`);
+};
+
+// example 2
+let calc: (a: number, b: number, c: string) => number;
+
+calc = (numOne: number, numTwo: number, action: string) => {
+  if (action === "add") {
+    return numOne + numTwo;
+  } else {
+    return numOne - numTwo;
+  }
+};
+
+// example 3
+let logDetails: (obj: { name: string; age: number }) => void;
+
+type person = { name: string; age: number };
+
+logDetails = (ninja: person) => {
+  console.log(`${ninja.name} is ${ninja.age} years old`);
+};
